@@ -39,7 +39,7 @@ fun Routing.authorization() {
                     userCredentials.password
             )
 
-            val user = userRepo.getByPasswordHashOrNull(passwordHash)
+            val user = userRepo.getByPasswordHashEmailOrNull(passwordHash, userCredentials.email)
 
             if(user == null) {
                 call.respond(

@@ -46,7 +46,7 @@ class UserRepo
         TODO("Not yet implemented")
     }
 
-    suspend fun getByPasswordHashOrNull(passwordHash: String): User? {
+    suspend fun getByPasswordHashEmailOrNull(passwordHash: String, email: String): User? {
 
         return onIo {
 
@@ -54,9 +54,9 @@ class UserRepo
                     .sendPreparedStatement(
                             """
                                 Select * from $tableName
-                                    Where password_hash=?;
+                                    Where password_hash=? and email=?;
                             """.trimIndent(),
-                            listOf(passwordHash))
+                            listOf(passwordHash, email))
                     .await()
                     .rows
 

@@ -7,6 +7,7 @@ import io.ktor.http.*
 import io.ktor.auth.*
 import com.studentis.database.gson.typeadapters.LocalTimeAdapter
 import com.studentis.di.components.DaggerAuthencticationComponent
+import com.studentis.models.Response
 import com.studentis.routes.authorization
 import com.studentis.routes.schedule
 import com.studentis.routes.teacherViews
@@ -32,7 +33,7 @@ fun Application.module(testing: Boolean = false) {
         exception<Throwable>() { ex ->
             call.respond(
                 HttpStatusCode.InternalServerError,
-                "Error: ${ex.message}"
+                Response("Error: ${ex.message}")
             )
         }
     }
