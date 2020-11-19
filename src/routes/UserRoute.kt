@@ -16,7 +16,7 @@ fun Routing.users() {
     val userRepo = component.getUserRepo()
 
 
-    route("/users") {
+    route("/studentis/users") {
         authenticate("admin") {
             get {
                 call.respond(userRepo.getAll())

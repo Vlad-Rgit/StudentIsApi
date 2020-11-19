@@ -24,7 +24,7 @@ class UserRepo
 
     override suspend fun getAll(): List<User> {
 
-        return withContext(Dispatchers.IO) {
+        return onIo {
 
             val resultSet = DatabaseFactory.pool
                     .sendQuery(
@@ -48,15 +48,15 @@ class UserRepo
 
     suspend fun getByPasswordHashOrNull(passwordHash: String): User? {
 
-        return withContext(Dispatchers.IO) {
+        return onIo {
 
             val resultSet = DatabaseFactory.pool
-                    .sendQuery(
+                    .sendPreparedStatement(
                             """
                                 Select * from $tableName
-                                    Where password_hash='$passwordHash';
-                            """.trimIndent()
-                    )
+                                    Where password_hash=?;
+                            """.trimIndent(),
+                            listOf(passwordHash))
                     .await()
                     .rows
 

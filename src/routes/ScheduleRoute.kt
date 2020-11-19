@@ -16,7 +16,8 @@ fun Routing.schedule() {
 
     val scheduleViewRepo = component.getScheduleViewRepo()
 
-    route("schedule") {
+    route("/studentis/schedule") {
+
         get {
             call.respond(scheduleViewRepo.getAll())
         }

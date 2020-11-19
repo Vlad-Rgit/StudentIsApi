@@ -22,7 +22,7 @@ class ScheduleViewRepo
 
     override suspend fun getAll(): List<ScheduleView> {
 
-        return withContext(Dispatchers.IO) {
+        return onIo {
 
             val resultSet = DatabaseFactory.pool
                     .sendQuery(
@@ -48,7 +48,7 @@ class ScheduleViewRepo
 
 
     suspend fun getByGroupNameOrNull(groupName: String): List<ScheduleView>? {
-        return withContext(Dispatchers.IO) {
+        return onIo {
             val result = DatabaseFactory.pool
                     .sendPreparedStatement(
                             """

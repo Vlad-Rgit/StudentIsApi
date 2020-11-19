@@ -21,16 +21,16 @@ class TeacherRepo @Inject constructor()
     lateinit var teacherMapper: TeacherMapper
 
     override suspend fun getAll(): List<Teacher> {
+        return onIo {
+            val resultSet = DatabaseFactory.pool
+                    .sendQuery(
+                            """
+                                Select * from $tableName;
+                            """.trimIndent())
+                    .await().rows
 
-        val resultSet = DatabaseFactory.pool
-            .sendQuery(
-                """
-                    Select * from $tableName;
-                """.trimIndent()
-            )
-            .await().rows
-
-        return teacherMapper.mapRowData(resultSet)
+            teacherMapper.mapRowData(resultSet)
+        }
     }
 
     override suspend fun getById(id: Int): Teacher {

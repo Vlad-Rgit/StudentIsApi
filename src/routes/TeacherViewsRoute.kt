@@ -13,7 +13,7 @@ fun Routing.teacherViews() {
 
     val teacherViewRepo = component.getTeacherViewRepo()
 
-    route("/teacherViews") {
+    route("/studentis/teacherViews") {
         get {
             call.respond(teacherViewRepo.getAll())
         }

@@ -30,7 +30,7 @@ fun Routing.authorization() {
     val jwtService = authComponent.getJwtService()
     val userRepo = repoComponent.getUserRepo()
 
-    route("/login") {
+    route("/studentis/login") {
         post {
 
             val userCredentials = call.receive<UserCredentials>()

@@ -21,17 +21,18 @@ class TeacherViewRepo
     lateinit var teacherViewMapper: TeacherViewMapper
 
     override suspend fun getAll(): List<TeacherView> {
-
-        val resultSet = DatabaseFactory.pool
-                .sendQuery(
-                        """
+        return onIo {
+            val resultSet = DatabaseFactory.pool
+                    .sendQuery(
+                            """
                             Select * from $tableName;
                         """.trimIndent()
-                )
-                .await()
-                .rows
+                    )
+                    .await()
+                    .rows
 
-        return teacherViewMapper.mapRowData(resultSet)
+            teacherViewMapper.mapRowData(resultSet)
+        }
     }
 
     override suspend fun getById(id: Int): TeacherView {
