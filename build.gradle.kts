@@ -36,6 +36,8 @@ dependencies {
     testImplementation("io.ktor:ktor-server-tests:$ktor_version")
 
 
+    implementation("com.apurebase:kgraphql:+")
+
     //jasync Postgres
     implementation("com.github.jasync-sql:jasync-postgresql:1.1.3")
 

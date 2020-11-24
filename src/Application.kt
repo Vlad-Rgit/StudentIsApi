@@ -1,5 +1,6 @@
 package com.studentis
 
+import com.studentis.database.gson.typeadapters.LocalDateAdapter
 import io.ktor.application.*
 import io.ktor.response.*
 import io.ktor.routing.*
@@ -8,13 +9,11 @@ import io.ktor.auth.*
 import com.studentis.database.gson.typeadapters.LocalTimeAdapter
 import com.studentis.di.components.DaggerAuthencticationComponent
 import com.studentis.models.Response
-import com.studentis.routes.authorization
-import com.studentis.routes.schedule
-import com.studentis.routes.teacherViews
-import com.studentis.routes.users
+import com.studentis.routes.*
 import io.ktor.auth.jwt.*
 import io.ktor.features.*
 import io.ktor.gson.*
+import org.joda.time.LocalDate
 import org.joda.time.LocalTime
 
 
@@ -42,6 +41,13 @@ fun Application.module(testing: Boolean = false) {
     install(Authentication) {
 
         val jwtService = authComponent.getJwtService()
+
+        jwt("all") {
+            verifier(jwtService.verifier)
+            validate { jwtCredential ->
+                JWTPrincipal(jwtCredential.payload)
+            }
+        }
 
         jwt(name = "teacher") {
             verifier(jwtService.verifier)
@@ -71,6 +77,7 @@ fun Application.module(testing: Boolean = false) {
         gson {
             setPrettyPrinting()
             registerTypeAdapter(LocalTime::class.java, LocalTimeAdapter())
+            registerTypeAdapter(LocalDate::class.java, LocalDateAdapter())
         }
     }
 
@@ -79,6 +86,11 @@ fun Application.module(testing: Boolean = false) {
         users()
         teacherViews()
         schedule()
+        groupView()
+        educationType()
+        teachers()
+        students()
+        studentStatusOnLesson()
     }
 }
 

@@ -1,9 +1,6 @@
 package com.studentis.di.components
 
-import com.studentis.database.repo.ScheduleViewRepo
-import com.studentis.database.repo.TeacherRepo
-import com.studentis.database.repo.TeacherViewRepo
-import com.studentis.database.repo.UserRepo
+import com.studentis.database.repo.*
 import dagger.Component
 import javax.inject.Singleton
 
@@ -14,4 +11,8 @@ interface RepoComponent {
     fun getTeacherRepo(): TeacherRepo
     fun getTeacherViewRepo(): TeacherViewRepo
     fun getScheduleViewRepo(): ScheduleViewRepo
+    fun getGroupViewRepo(): GroupViewRepo
+    fun getEducationTypeRepo(): EducationTypeRepo
+    fun getStudentRepo(): StudentRepo
+    fun getStudentStatusOnLessonRepo(): StudentStatusOnLessonRepo
 }

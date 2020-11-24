@@ -1,12 +1,11 @@
 package com.studentis.database.repo
 
-import com.github.jasync.sql.db.RowData
 import com.studentis.database.DatabaseFactory
 import com.studentis.database.mappers.UserMapper
+import com.studentis.database.repo.interfaces.Repo
 import com.studentis.models.User
-import kotlinx.coroutines.Dispatchers
+import com.studentis.utils.onIo
 import kotlinx.coroutines.future.await
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -39,7 +38,18 @@ class UserRepo
     }
 
     override suspend fun getById(id: Int): User {
-        TODO("Not yet implemented")
+        return onIo {
+
+            val resultSet = DatabaseFactory.pool
+                    .sendPreparedStatement("""
+                        Select * from $tableName
+                            Where user_id=?;
+                    """.trimIndent(), listOf(id))
+                    .await()
+                    .rows
+
+            userMapper.mapRowData(resultSet[0])
+        }
     }
 
     override suspend fun getWhere(where: String): List<User> {

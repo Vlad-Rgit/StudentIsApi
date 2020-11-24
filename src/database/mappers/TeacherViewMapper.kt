@@ -22,7 +22,7 @@ class TeacherViewMapper
                 educationalTypeId = row.getInt("education_type_id")!!,
                 educationalInstitution = row.getString("educational_institution")!!,
                 specialisation = row.getString("specialisation")!!,
-                auditorium = row.getInt("auditorium"),
+                auditorium = row.getAs<Short?>("auditorium"),
                 educationalTypeName = row.getString("education_type_name")!!
         )
     }

@@ -10,7 +10,7 @@ data class TeacherView(
         var passportNumber: String,
         var educationalInstitution: String,
         var specialisation: String,
-        var auditorium: Int?,
+        var auditorium: Short?,
         var educationalTypeId: Int,
         val educationalTypeName: String
 )
